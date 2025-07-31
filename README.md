@@ -46,3 +46,12 @@ func main() {
   db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 }
 ```
+
+3. Buat table sample pada Database
+
+```bash
+CREATE TABLE IF NOT EXISTS sample(
+    id VARCHAR(100) NOT NULL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL
+)engine = INNODB
+```
