@@ -1,14 +1,17 @@
 package learn_golang_gorm
 
+// Karena sudah sesuai dengan konvensi GORM,
+// kita tidak perlu mendefinisikan nama tabel dan juga nama kolom (opsional).
+// GORM akan secara otomatis menggunakan nama struct sebagai nama tabel dan nama field sebagai nama kolom
 type User struct {
-	ID       string `gorm:"primaryKey;column:id"`
-	Name     string `gorm:"column:name"`
-	Password string `gorm:"column:password"`
-	CreateAt string `gorm:"column:created_at;autoCreateTime"`
-	UpdateAt string `gorm:"column:updated_at;autoCreateTime;autoUpdateTime"`
+	ID       string
+	Name     string
+	Password string
+	CreateAt string
+	UpdateAt string
 }
 
 // jika ingin mendefinisikan nama tabel
-func (u *User) TableName() string {
-	return "users"
-}
+// func (u *User) TableName() string {
+// 	return "users"
+// }
