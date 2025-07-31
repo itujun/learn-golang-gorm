@@ -125,3 +125,62 @@ func TestBatchInsertUsers(t *testing.T) {
 	assert.Nil(t, response.Error)
 	assert.Equal(t, 8, int(response.RowsAffected))
 }
+
+func TestManualTransactionSuccess(t *testing.T){
+	tx := db.Begin()
+	defer tx.Rollback() // Pastikan rollback jika tidak commit
+
+	err := tx.Create(&User{ID: "10", Name: Name{FirstName: "User10"}, Password: "secret"}).Error
+	assert.Nil(t, err)
+
+	err = tx.Create(&User{ID: "11", Name: Name{FirstName: "User11"}, Password: "secret"}).Error
+	assert.Nil(t, err)
+
+	if err == nil {
+		tx.Commit() // Commit jika tidak ada error
+	}
+}
+
+func TestManualTransactionFailure(t *testing.T){
+	tx := db.Begin()
+	defer tx.Rollback() // Pastikan rollback jika tidak commit
+
+	err := tx.Create(&User{ID: "12", Name: Name{FirstName: "User12"}, Password: "secret"}).Error
+	assert.Nil(t, err)
+
+	err = tx.Create(&User{ID: "11", Name: Name{FirstName: "User11"}, Password: "secret"}).Error
+	assert.Nil(t, err)
+
+	if err == nil {
+		tx.Commit() // Commit jika tidak ada error
+	}
+}
+
+func TestTransactionSuccessWithGorm(t *testing.T) {
+	err := db.Transaction(func(tx *gorm.DB) error {
+		if err := tx.Create(&User{ID: "12", Name: Name{FirstName: "User12"}, Password: "secret"}).Error; err != nil {
+			return err
+		}
+		if err := tx.Create(&User{ID: "13", Name: Name{FirstName: "User13"}, Password: "secret"}).Error; err != nil {
+			return err
+		}
+		if err := tx.Create(&User{ID: "14", Name: Name{FirstName: "User14"}, Password: "secret"}).Error; err != nil {
+			return err
+		}
+		return nil
+	})
+	assert.Nil(t, err)
+}
+
+func TestTransactionFailureWithGorm(t *testing.T) {
+	err := db.Transaction(func(tx *gorm.DB) error {
+		if err := tx.Create(&User{ID: "15", Name: Name{FirstName: "User15"}, Password: "secret"}).Error; err != nil {
+			return err
+		}
+		if err := tx.Create(&User{ID: "13", Name: Name{FirstName: "User13"}, Password: "secret"}).Error; err != nil {
+			return err
+		}
+		return nil
+	})
+	assert.NotNil(t, err)
+}
