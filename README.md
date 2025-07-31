@@ -27,3 +27,7 @@ go get -u gorm.io/gorm
 # pada projek ini, saya menggunakan mysql
 go get -u gorm.io/driver/mysql
 ```
+
+### SETUP PROJECT
+
+1. Buat Database: learn_golang_gorm
