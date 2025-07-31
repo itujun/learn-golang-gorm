@@ -31,3 +31,18 @@ go get -u gorm.io/driver/mysql
 ### SETUP PROJECT
 
 1. Buat Database: learn_golang_gorm
+2. Hubungkan project ke Database
+   (cek dokumentasinya disini)[https://gorm.io/docs/connecting_to_the_database.html]
+
+```bash
+import (
+  "gorm.io/driver/mysql"
+  "gorm.io/gorm"
+)
+
+func main() {
+  // refer https://github.com/go-sql-driver/mysql#dsn-data-source-name for details
+  dsn := "user:pass@tcp(127.0.0.1:3306)/dbname?charset=utf8mb4&parseTime=True&loc=Local"
+  db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
+}
+```
