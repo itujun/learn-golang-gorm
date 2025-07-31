@@ -1,6 +1,7 @@
 package learn_golang_gorm
 
 import (
+	"strconv"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -87,4 +88,37 @@ func TestScanRow(t *testing.T){
 		// Tidak perlu lagi melakukan append, karena ScanRows sudah mengisi slice samples
 	}
 	assert.Equal(t, 4, len(samples))
+}
+
+func TestCreateUser(t *testing.T) {
+	user := User{
+		ID: "1",
+		Name: Name{
+			FirstName:  "Lev",
+			MiddleName: "Tempest",
+			LastName:   "Vex",
+		},
+		Password: "secret",
+	}
+
+	response := db.Create(&user)
+	assert.Nil(t, response.Error)
+	assert.Equal(t, int64(1), response.RowsAffected)
+}
+
+func TestBatchInsertUsers(t *testing.T) {
+	var users []User
+	for i := 2; i < 10; i++ {
+		users = append(users, User{
+			ID:       strconv.Itoa(i),
+			Name:     Name{
+				FirstName: "User" + strconv.Itoa(i),
+			},
+			Password: "secret",
+		})
+	}
+
+	response := db.Create(&users)
+	assert.Nil(t, response.Error)
+	assert.Equal(t, 8, int(response.RowsAffected))
 }

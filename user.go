@@ -1,14 +1,16 @@
 package learn_golang_gorm
 
+import "time"
+
 // Karena sudah sesuai dengan konvensi GORM,
 // kita tidak perlu mendefinisikan nama tabel dan juga nama kolom (opsional).
 // GORM akan secara otomatis menggunakan nama struct sebagai nama tabel dan nama field sebagai nama kolom
 type User struct {
 	ID       string 
-	Name     Name `gorm:"embedded"` // Menggunakan embedded struct
+	Name     Name `gorm:"embedded"`
 	Password string
-	CreateAt string
-	UpdateAt string
+	CreatedAt time.Time
+	UpdatedAt time.Time
 }
 
 type Name struct{
