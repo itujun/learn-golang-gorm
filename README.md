@@ -67,3 +67,17 @@ CREATE TABLE IF NOT EXISTS users(
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 )engine = InnoDB;
 ```
+
+5. Edit table users pada database
+
+```bash
+-- Ubah nama kolom 'name' menjadi 'first_name'
+ALTER TABLE users
+  CHANGE name first_name VARCHAR(255);
+
+-- Tambahkan kolom baru
+ALTER TABLE users
+  ADD COLUMN middle_name VARCHAR(100) NULL AFTER first_name,
+  ADD COLUMN last_name VARCHAR(100) NULL AFTER middle_name;
+
+```
