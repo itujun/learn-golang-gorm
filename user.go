@@ -23,3 +23,11 @@ type Name struct{
 // func (u *User) TableName() string {
 // 	return "users"
 // }
+
+type UserLog struct {
+	ID 			int 	`gorm:"primary_key;autoIncrement"`
+	UserId 		string	`gorm:"column:user_id"`
+	Action 		string
+	CreatedAt time.Time
+	UpdatedAt time.Time
+}

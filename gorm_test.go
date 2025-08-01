@@ -330,3 +330,17 @@ func TestUpdateSelectedColumns(t *testing.T){
 	}).Error
 	assert.Nil(t, err)
 }
+
+func TestAutoIncrement(t *testing.T){
+	for i :=  0; i < 10; i++ {
+		userLog := UserLog{
+			UserId: "1",
+			Action: "Test Action",
+		}
+
+		err := db.Create(&userLog).Error
+		assert.Nil(t, err) 					// Pastikan tidak ada error saat menyimpan UserLog
+		assert.NotEqual(t, 0, userLog.ID) 	// Pastikan ID tidak nol
+		fmt.Println(userLog.ID) 			// Cetak ID untuk verifikasi;
+	}
+}

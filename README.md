@@ -81,3 +81,15 @@ ALTER TABLE users
   ADD COLUMN last_name VARCHAR(100) NULL AFTER middle_name;
 
 ```
+
+6. Buat table user_logs pada database
+
+```bash
+CREATE TABLE IF NOT EXISTS user_logs(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id VARCHAR(100) NOT NULL,
+    action VARCHAR(100) NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+)engine = InnoDB;
+```
