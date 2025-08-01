@@ -292,3 +292,41 @@ func TestQueryNonModel(t *testing.T){
 	assert.Equal(t, 14, len(users))
 	fmt.Println(users);
 }
+
+func TestUpdate(t *testing.T){
+	user := User{}
+	err := db.Take(&user, "id = ?", "1").Error
+	assert.Nil(t, err)
+
+	user.Name.FirstName = "Levi"
+	user.Name.MiddleName = ""
+	user.Name.LastName = "kun"
+	user.Password = "secret123"
+
+	err = db.Save(&user).Error
+	assert.Nil(t, err)
+}
+
+func TestUpdateSelectedColumns(t *testing.T){
+	// updates versi 1
+	// dari model (tabel) users, yang id = 1, lakukan update...
+	err := db.Model(&User{}).Where("id = ?", "1").Updates(map[string]interface{}{
+		"middle_name" : "",
+		"last_name" : "San",
+	}).Error
+	assert.Nil(t, err)
+
+	// update versi 2
+	err = db.Model(&User{}).Where("id = ?", "1").Update("password", "secretberubah").Error
+	assert.Nil(t, err)
+
+	// update versi 3
+	// karena diatas sudah menentukan model yg akan digunakan, maka menambahakan kode db.Model() bisa optional
+	err = db.Where("id = ?", "1").Updates(User{
+		Name: Name{
+			FirstName: "Lev",
+			LastName: "Tempest",
+		},
+	}).Error
+	assert.Nil(t, err)
+}
