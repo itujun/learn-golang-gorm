@@ -389,3 +389,20 @@ func TestOnConflict(t *testing.T){
 	}).Create(&user).Error // insert
 	assert.Nil(t, err)
 }
+
+func TestDeke(t *testing.T){
+	var user User
+	// cara 1 : select dulu baru update
+	err := db.Take(&user, "id = ?", "88").Error
+	assert.Nil(t, err)
+	err = db.Delete(&user).Error
+	assert.Nil(t, err)
+
+	// cara 2 : langsung delete
+	err = db.Delete(&User{}, "id = ?", "99").Error
+	assert.Nil(t, err)
+
+	// cara 3 : langsung delete
+	err = db.Where("id = ?", "14").Delete(&User{}).Error
+	assert.Nil(t, err)
+}
