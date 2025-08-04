@@ -11,6 +11,7 @@ type User struct {
 	Password string
 	CreatedAt time.Time
 	UpdatedAt time.Time
+	Wallet   Wallet `gorm:"foreignKey:user_id;references:id"`
 }
 
 type Name struct{

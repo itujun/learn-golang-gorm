@@ -112,8 +112,23 @@ create table todos
 	title 	VARCHAR(100)	NOT NULL ,
 	description TEXT		NULL ,
 	created_at TIMESTAMP	NOT NULL	DEFAULT CURRENT_TIMESTAMP ,
-	updated_at TIMESTAMP	NOT NULL	DEFAULT CURRENT_TIMESTAMP ,
+	updated_at TIMESTAMP	NOT NULL	DEFAULT CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
 	deleted_at TIMESTAMP	NULL ,
 	PRIMARY KEY (id)
+) ENGINE = InnoDb;
+```
+
+9. Buat table wallets
+
+```bash
+create table wallets
+(
+	id	    VARCHAR(100)	NOT NULL ,
+	user_id VARCHAR(100)	NOT NULL ,
+	balance BIGINT	      NOT NULL ,
+	created_at TIMESTAMP	NOT NULL	DEFAULT CURRENT_TIMESTAMP ,
+	updated_at TIMESTAMP	NOT NULL	DEFAULT CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
+	PRIMARY KEY (id) ,
+  FOREIGN KEY (user_id) REFERENCES users (id)
 ) ENGINE = InnoDb;
 ```
