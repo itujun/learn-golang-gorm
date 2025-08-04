@@ -31,7 +31,7 @@ func OpenConnection() *gorm.DB {
 	sqlDB.SetMaxOpenConns(100)
 	sqlDB.SetConnMaxIdleTime(5 * time.Minute)
 	sqlDB.SetConnMaxLifetime(30 * time.Minute)
-	
+
 	return db
 }
 
@@ -803,4 +803,9 @@ func TestScopes(t *testing.T){
 	err = db.Scopes(SultanWalletBalance).Find(&wallets).Error
 	assert.Nil(t, err)
 	fmt.Println("SultanWalletBalance", len(wallets));
+}
+
+func TestMigrator(t *testing.T){	// lebih disarankan menggunakan migrator manual
+	err := db.Migrator().AutoMigrate(&GuestBook{})
+	assert.Nil(t, err)
 }
