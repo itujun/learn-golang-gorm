@@ -147,3 +147,30 @@ create table addresses
   FOREIGN KEY (user_id) REFERENCES users (id)
 ) ENGINE = InnoDb;
 ```
+
+11. Buat table products
+
+```bash
+create table products
+(
+	id	    VARCHAR(100)  NOT NULL ,
+	name    VARCHAR(100)	NOT NULL ,
+	price   VARCHAR(100)	NOT NULL ,
+	created_at TIMESTAMP	NOT NULL	DEFAULT CURRENT_TIMESTAMP ,
+	updated_at TIMESTAMP	NOT NULL	DEFAULT CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
+	PRIMARY KEY (id)
+) ENGINE = InnoDb;
+```
+
+12. Buat table penghubung user_like_product
+
+```bash
+create table user_like_product
+(
+	user_id	    VARCHAR(100)  NOT NULL ,
+	product_id  VARCHAR(100)	NOT NULL ,
+	PRIMARY KEY (user_id, product_id) ,
+  FOREIGN KEY (user_id) REFERENCES users(id) ,
+  FOREIGN KEY (product_id) REFERENCES products(id)
+) ENGINE = InnoDb;
+```

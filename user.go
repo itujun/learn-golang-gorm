@@ -11,8 +11,10 @@ type User struct {
 	Password string
 	CreatedAt time.Time
 	UpdatedAt time.Time
-	Wallet   Wallet 	`gorm:"foreignKey:user_id;references:id"`
-	Addresses []Address `gorm:"foreignKey:user_id;references:id"`
+	Wallet   	Wallet 		`gorm:"foreignKey:user_id;references:id"`
+	Addresses 	[]Address 	`gorm:"foreignKey:user_id;references:id"`
+	LikeProducts []Product	`gorm:"many2many:user_like_product;foreignKey:id;joinForeignKey:user_id;references:id;joinReferences:product_id"`
+	// ====================> `gorm:"many2many: nama_table_penghubung; foreignKey: nama_kolom_penghubung; joinForeignKey: nama_kolom_dari_tabel_1; references: nama_kolom_dari_tabel_1; joinReferences: nama_kolom_dari_tabel_2"` 
 }
 
 type Name struct{
