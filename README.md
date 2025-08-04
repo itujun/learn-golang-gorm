@@ -101,3 +101,19 @@ alter table user_logs
 	MODIFY created_at BIGINT not null
   MODIFY updated_at BIGINT not null
 ```
+
+8. Buat table todos
+
+```bash
+create table todos
+(
+	id	BIGINT	NOT NULL	AUTO_INCREMENT ,
+	user_id VARCHAR(100)	NOT NULL ,
+	title 	VARCHAR(100)	NOT NULL ,
+	description TEXT		NULL ,
+	created_at TIMESTAMP	NOT NULL	DEFAULT CURRENT_TIMESTAMP ,
+	updated_at TIMESTAMP	NOT NULL	DEFAULT CURRENT_TIMESTAMP ,
+	deleted_at TIMESTAMP	NULL ,
+	PRIMARY KEY (id)
+) ENGINE = InnoDb;
+```
