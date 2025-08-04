@@ -93,3 +93,11 @@ CREATE TABLE IF NOT EXISTS user_logs(
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 )engine = InnoDB;
 ```
+
+7. Ubah tipe kolom menjadi bigint pada created_at dan updated_at pada table user_logs
+
+```bash
+alter table user_logs
+	MODIFY created_at BIGINT not null
+  MODIFY updated_at BIGINT not null
+```

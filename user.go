@@ -28,6 +28,6 @@ type UserLog struct {
 	ID 			int 	`gorm:"primary_key;autoIncrement"`
 	UserId 		string	`gorm:"column:user_id"`
 	Action 		string
-	CreatedAt time.Time
-	UpdatedAt time.Time
+	CreatedAt 	int64	`gorm:"column:created_at;autoCreateTime:milli"`
+	UpdatedAt 	int64	`gorm:"column:updated_at;autoCreateTime:milli;autoUpdateTime:milli"`
 }
