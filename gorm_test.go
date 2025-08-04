@@ -18,6 +18,8 @@ func OpenConnection() *gorm.DB {
 	dialect := mysql.Open("root:@tcp(localhost:3306)/learn_golang_gorm?charset=utf8mb4&parseTime=True&loc=Local")
 	db, err := gorm.Open(dialect, &gorm.Config{
 		Logger: logger.Default.LogMode(logger.Info), // Set log level to Info
+		SkipDefaultTransaction: true,				// Disable default transaction
+		PrepareStmt: true,							// Enable prepare statement
 	})
 	if err != nil {
 		panic(err)		
