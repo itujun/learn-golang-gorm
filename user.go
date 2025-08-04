@@ -1,6 +1,10 @@
 package learn_golang_gorm
 
-import "time"
+import (
+	"time"
+
+	"gorm.io/gorm"
+)
 
 // Karena sudah sesuai dengan konvensi GORM,
 // kita tidak perlu mendefinisikan nama tabel dan juga nama kolom (opsional).
@@ -15,6 +19,13 @@ type User struct {
 	Addresses 	[]Address 	`gorm:"foreignKey:user_id;references:id"`
 	LikeProducts []Product	`gorm:"many2many:user_like_product;foreignKey:id;joinForeignKey:user_id;references:id;joinReferences:product_id"`
 	// ====================> `gorm:"many2many: nama_table_penghubung; foreignKey: nama_kolom_penghubung; joinForeignKey: nama_kolom_dari_tabel_1; references: nama_kolom_dari_tabel_1; joinReferences: nama_kolom_dari_tabel_2"` 
+}
+
+func (u *User) BeforeCreate(db *gorm.DB) error {
+	if u.ID == "" {
+		u.ID = "user-" + time.Now().Format("20060102150405")
+	}
+	return nil
 }
 
 type Name struct{

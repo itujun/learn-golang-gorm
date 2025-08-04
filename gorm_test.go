@@ -809,3 +809,50 @@ func TestMigrator(t *testing.T){	// lebih disarankan menggunakan migrator manual
 	err := db.Migrator().AutoMigrate(&GuestBook{})
 	assert.Nil(t, err)
 }
+
+// HOOK untuk Create
+// 1. // begin transaction
+// 2. BeforeSave()
+// 3. BeforeCreate()
+// 4. // save before assosations
+// 5. // insert into database
+// 6. // save after assosations
+// 7. AfterCreate()
+// 8. AfterSave()
+// 9. // commit or rollback transaction
+
+// HOOK untuk Update
+// 1. // begin transaction
+// 2. BeforeSave()
+// 3. BeforeUpdate()
+// 4. // save before assosations
+// 5. // update database
+// 6. // save after assosations
+// 7. AfterUpdate()
+// 8. AfterSave()
+// 9. // commit or rollback transaction
+
+// HOOK untuk Delete
+// 1. // begin transaction
+// 2. BeforeDelete()
+// 3. // delete from database
+// 4. AfterDelete()
+// 5. // commit or rollback transaction
+
+// HOOK untuk Find
+// 1. // load data from database
+// 2. // preloading (eager loading)
+// 3. AfterFind()
+
+func TestHook(t *testing.T){
+	user := User{
+		Password: "secret",
+		Name: Name{
+			FirstName: "User 100",
+		},
+	}
+	err := db.Create(&user).Error
+	assert.Nil(t, err)
+	assert.NotEqual(t, "", user.ID)
+	fmt.Println("user.ID: ", user.ID);
+}
