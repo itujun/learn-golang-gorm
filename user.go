@@ -7,11 +7,12 @@ import "time"
 // GORM akan secara otomatis menggunakan nama struct sebagai nama tabel dan nama field sebagai nama kolom
 type User struct {
 	ID       string 
-	Name     Name `gorm:"embedded"`
+	Name     Name 		`gorm:"embedded"`
 	Password string
 	CreatedAt time.Time
 	UpdatedAt time.Time
-	Wallet   Wallet `gorm:"foreignKey:user_id;references:id"`
+	Wallet   Wallet 	`gorm:"foreignKey:user_id;references:id"`
+	Addresses []Address `gorm:"foreignKey:user_id;references:id"`
 }
 
 type Name struct{

@@ -132,3 +132,18 @@ create table wallets
   FOREIGN KEY (user_id) REFERENCES users (id)
 ) ENGINE = InnoDb;
 ```
+
+10. Buat table addresses
+
+```bash
+create table addresses
+(
+	id	    BIGINT	      NOT NULL AUTO_INCREMENT ,
+	user_id VARCHAR(100)	NOT NULL ,
+	address VARCHAR(100)	NOT NULL ,
+	created_at TIMESTAMP	NOT NULL	DEFAULT CURRENT_TIMESTAMP ,
+	updated_at TIMESTAMP	NOT NULL	DEFAULT CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
+	PRIMARY KEY (id) ,
+  FOREIGN KEY (user_id) REFERENCES users (id)
+) ENGINE = InnoDb;
+```
