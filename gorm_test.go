@@ -522,14 +522,14 @@ func TestSkipAutoCreateUpdate(t *testing.T){
 
 func TestUserAndAddresses(t *testing.T){
 	user := User{
-		ID: "50",
+		ID: "2",
 		Password: "secret",
 		Name: Name{
-			FirstName: "User 50",
+			FirstName: "User 2",
 		},
 		Wallet: Wallet{
-			ID: "50",
-			UserId: "50",
+			ID: "2",
+			UserId: "2",
 			Balance: 1000000,
 		},
 		Addresses: []Address{
@@ -542,7 +542,8 @@ func TestUserAndAddresses(t *testing.T){
 		},
 	}
 
-	err := db.Create(&user).Error
+	// err := db.Create(&user).Error
+	err := db.Save(&user).Error
 	assert.Nil(t, err)
 }
 
@@ -555,5 +556,31 @@ func TestPreloadJoinOneToMany(t *testing.T){
 func TestTakePreloadJoinOneToMany(t *testing.T){
 	var user User
 	err := db.Model(&User{}).Preload("Addresses").Joins("Wallet").Take(&user, "users.id = ?", "50").Error // preload untuk relasi One to Many, join untuk relasi One to One
+	assert.Nil(t, err)
+}
+
+func TestBelongsTo(t *testing.T){
+	fmt.Println("Preload");
+	var addresses []Address
+	err := db.Model(&Address{}).Preload("User").Find(&addresses).Error // preload melakukan 2x query
+	assert.Nil(t, err)
+	assert.Equal(t, 4, len(addresses))
+
+	fmt.Println("Joins");
+	addresses = []Address{}
+	err = db.Model(&Address{}).Joins("User").Find(&addresses).Error	// joins melakukan 1x query
+	assert.Nil(t, err)
+	assert.Equal(t, 4, len(addresses))
+}
+
+func TestBelongsToWallet(t *testing.T){ 	// BelongsToOneToOne
+	fmt.Println("Preload");
+	var wallets []Wallet
+	err := db.Model(&Wallet{}).Preload("User").Find(&wallets).Error // preload melakukan 2x query
+	assert.Nil(t, err)
+
+	fmt.Println("Joins");
+	wallets = []Wallet{}
+	err = db.Model(&Wallet{}).Joins("User").Find(&wallets).Error	// joins melakukan 1x query
 	assert.Nil(t, err)
 }
